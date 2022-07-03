@@ -1,21 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from "react-router-dom";
 import { getItem } from '../services/itemService';
 import FullScreenLoadingIndicator from './FullScreenLoadingIndicator';
 import Carousel from 'react-material-ui-carousel';
 import DetailItem, { caracteristic } from '../interfaces/DetailItem';
 import TabPanel from './TabPanel';
+import CardItem from '../interfaces/CardItem';
 import '../styles/Item.css';
 
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 
-export default function Item() {
+export default function Item({ setCart }: { setCart: React.Dispatch<React.SetStateAction<{ item: DetailItem, quantity: number }[] | []>> }) {
   let { id } = useParams();
-  const [item, setItem] = useState<DetailItem | null>(null);
+  const [item, setItem] = useState<DetailItem>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [quantity, setQuantity] = useState<number>(0);
+  const [tab, setTab] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,17 +28,21 @@ export default function Item() {
       setItem(item);
     }
     fetchData()
-      .then(el => console.log(el))
       .catch(console.error)
       .finally(() => setIsLoading(false));
   }, [id])
 
-  const [value, setValue] = useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+  function handleChange(event: React.SyntheticEvent, newValue: number) {
+    setTab(newValue);
   };
 
+  function addToCart() {
+    if (item) {
+      setCart((prev) => [...prev, { item: item, quantity: quantity }]);
+      setQuantity(0);
+    }
+  }
 
   if (isLoading) {
     return <FullScreenLoadingIndicator />
@@ -52,27 +61,34 @@ export default function Item() {
 
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+            <Tabs value={tab} onChange={handleChange} aria-label="basic tabs example">
               <Tab label="Description" />
               <Tab label="Caractéristiques" />
             </Tabs>
           </Box>
 
 
-          <TabPanel value={value} index={0}>
+          <TabPanel value={tab} index={0}>
             {item?.description}
           </TabPanel>
 
-          <TabPanel value={value} index={1}>
-            {item && item?.caracteristics.map((el: caracteristic) => {
+          <TabPanel value={tab} index={1}>
+            {item && item?.caracteristics.map((el: caracteristic, index: number) => {
               return (
-                <p>
+                <div key={index}>
                   {el.key}: {el.value}
-                </p>
+                </div>
               )
             })}
           </TabPanel>
         </Box>
+
+        <div className="Item__add-basket">
+          <TextField value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value)) } type="number" id="standard-basic" label="Quantité" variant="standard" />
+          <Button onClick={addToCart} disabled={quantity > 0 ? false : true} size="large" variant="contained">
+            Ajouter au panier
+          </Button>
+        </div>
 
       </div>
     )

@@ -1,11 +1,19 @@
 .Item {
   margin: 0 auto;
   max-width: 500px;
-  background-color: bisque;
+  padding-bottom: 30px;
+  /* background-color: bisque; */
 }
 
 .Item__carousel img {
   height: auto;
   width: 100%;
   border-radius: 5px;
+}
+
+.Item__add-basket {
+  border-top: 1px solid #0000001f;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-evenly;
 }
