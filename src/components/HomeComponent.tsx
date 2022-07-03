@@ -1,25 +1,20 @@
-import FullScreenLoadingIndicator from './FullScreenLoadingIndicator';
 import CardItem from '../interfaces/CardItem';
-import GiftCard from './GiftCard';
+import ItemCard from './ItemCard';
+import { Link } from 'react-router-dom';
+import '../styles/HomeComponent.css';
 
-export default function HomeComponent({isLoading, itemList}: {isLoading: boolean, itemList: CardItem[] | null}) {
+export default function HomeComponent({ itemList }: { itemList: CardItem[] | null }) {
 
-  if (isLoading) {
-    return <FullScreenLoadingIndicator />
-  } else {
-    return (
-      <>
-        <div>
-          {itemList && itemList.map(item => {
-            return (
-              <div key={item.id}>
-                <GiftCard item={item} />
-              </div>
-            )
-          })}
-        </div>
-      </>)
-
-  }
+  return (
+    <div className="HomeComponent">
+      {itemList && itemList.map(item => {
+        return (
+          <Link to={`/item/${item.id}`} key={item.id} className="HomeComponent__item">
+            <ItemCard item={item} />
+          </Link>
+        )
+      })}
+    </div>
+  )
 }
 

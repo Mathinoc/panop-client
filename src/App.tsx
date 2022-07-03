@@ -7,6 +7,8 @@ import FavoriteView from './views/FavoriteView';
 import CartView from './views/CartView';
 import { getAllItems } from './services/itemService';
 import CardItem from './interfaces/CardItem';
+import Header from './components/Header';
+import FullScreenLoadingIndicator from './components/FullScreenLoadingIndicator';
 
 
 function App() {
@@ -21,21 +23,27 @@ function App() {
     fetchData()
       .catch(console.error)
       .finally(() => setIsLoading(false));
-
   }, [])
 
   return (
     <div className="App">
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomeView isLoading={isLoading} itemList={itemList} />} />
-          <Route path="/item/:id" element={<ItemDetailView />} />
-          <Route path="/favorites" element={<FavoriteView />} />
-          <Route path="/cart" element={<CartView />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+        <Header />
+        {isLoading ?
+          <FullScreenLoadingIndicator />
+          :
+          <main>
+            <Routes>
+              <Route path="/" element={<HomeView itemList={itemList} />} />
+              <Route path="/item/:id" element={<ItemDetailView />} />
+              <Route path="/favorites" element={<FavoriteView />} />
+              <Route path="/cart" element={<CartView />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </main>
+        }
       </BrowserRouter>
-    </div>
+    </div >
   );
 }
 

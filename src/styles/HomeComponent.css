@@ -1,0 +1,16 @@
+.HomeComponent {
+  margin: 30px auto;
+  left: 0;
+  right: 0;
+  max-width: 750px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 20px;
+}
+.HomeComponent__item{
+  height: 340px;
+  width: fit-content;
+  text-decoration: none;
+}
