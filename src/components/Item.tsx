@@ -39,7 +39,10 @@ export default function Item({ setCart }: { setCart: React.Dispatch<React.SetSta
 
   function addToCart() {
     if (item) {
-      setCart((prev) => [...prev, { item: item, quantity: quantity }]);
+      setCart((prev) => {
+        const noDuplicate = prev.filter(el => el.item.id !== item.id);
+        return [...noDuplicate, { item: item, quantity: quantity }]
+      });
       setQuantity(0);
     }
   }
@@ -84,7 +87,7 @@ export default function Item({ setCart }: { setCart: React.Dispatch<React.SetSta
         </Box>
 
         <div className="Item__add-basket">
-          <TextField value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value)) } type="number" id="standard-basic" label="Quantité" variant="standard" />
+          <TextField value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))} type="number" id="standard-basic" label="Quantité" variant="standard" />
           <Button onClick={addToCart} disabled={quantity > 0 ? false : true} size="large" variant="contained">
             Ajouter au panier
           </Button>

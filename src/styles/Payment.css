@@ -1,0 +1,8 @@
+.Payment {
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  max-width: var(--max-width);
+  display: flex;
+  flex-direction: column;
+}

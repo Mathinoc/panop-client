@@ -4,7 +4,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Link } from 'react-router-dom';
 import '../styles/Header.css';
 
-export default function Header() {
+export default function Header({cartLength}:{cartLength: number}) {
   return (
     <div className="Header">
       <Link to="/">
@@ -13,14 +13,14 @@ export default function Header() {
       <nav>
         <Link to="/cart" >
           <IconButton onClick={() => console.log("clicked")} aria-label="cart">
-            <Badge badgeContent={4} color="secondary">
+            <Badge badgeContent={cartLength} color="secondary">
               <AddShoppingCartIcon />
             </Badge>
           </IconButton>
         </Link>
         <Link to="/favorites" >
           <IconButton onClick={() => console.log("clicked")} aria-label="cart">
-            <Badge badgeContent={1} color="secondary">
+            <Badge badgeContent={0} color="secondary">
               <FavoriteBorderIcon />
             </Badge>
           </IconButton>

@@ -12,7 +12,7 @@
 }
 
 .Item__add-basket {
-  border-top: 1px solid #0000001f;
+  border-top: var(--border-light);
   padding-top: 20px;
   display: flex;
   justify-content: space-evenly;

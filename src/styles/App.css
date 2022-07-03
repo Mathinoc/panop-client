@@ -1,3 +1,8 @@
+:root{
+  --max-width: 750px;
+  --border-light: 1px solid #0000001f;
+  --title-color: rgb(52, 52, 52);
+}
 main{
   margin: 30px 0;
 }
