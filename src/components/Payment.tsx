@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -8,35 +8,35 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import DetailItem from '../interfaces/DetailItem';
+import { Link } from 'react-router-dom';
 import '../styles/Payment.css';
 
-import { FormControl, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 
 const steps = [
   {
     label: 'Coordonnées de livraison',
-    description: `For each ad campaign that you create, you can control how much
-              you're willing to spend on clicks and conversions, which networks
-              and geographical locations you want your ads to show on, and more.`,
   },
   {
     label: 'Paiement',
-    description:
-      'An ad group contains one or more ads which target a shared set of keywords.',
   },
-  // {
-  //   label: 'Confirmation',
-  //   description: `Try out different ad text to see what brings in the most customers,
-  //             and learn how to enhance your ads using features like ad extensions.
-  //             If you run into any problems with your ads, find out how to tell if
-  //             they're running and how to resolve approval issues.`,
-  // },
 ];
 
 export default function Payment({ cart }: { cart: { item: DetailItem, quantity: number }[] }) {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState<number>(0);
+  const [validation, setValidation] = useState<{ok: boolean, message: string}>({ok: false, message:""});
 
-  const handleNext = () => {
+  const handleNext = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (activeStep === steps.length) {
+
+      // check if items are available at supplier(s)
+
+
+      // set validation status and set message ("success" or "failure" because of item "x")
+
+
+    }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
@@ -59,47 +59,58 @@ export default function Payment({ cart }: { cart: { item: DetailItem, quantity: 
             <StepContent>
               {
                 index === 0 &&
-                <form>
+                <form onSubmit={handleNext}>
                   <div className="Payment__inline-div">
-                    <TextField className="Payment__inline-child" label="Prénom" variant="filled" required />
-                    <TextField className="Payment__inline-child" label="Nom" variant="filled" required />
+                    <TextField className="Payment__inline-child" type="text" label="Prénom" variant="filled" required />
+                    <TextField className="Payment__inline-child" type="text" label="Nom" variant="filled" required />
                   </div>
-                  <TextField label="Adresse" variant="filled" required />
-                  <TextField label="Code postal" variant="filled" required />
-                  <TextField label="Ville" variant="filled" required />
+                  <TextField label="E-mail" type="email" variant="filled" required />
+                  <TextField label="Adresse" type="text" variant="filled" required />
+                  <TextField label="Code postal" type="number" variant="filled" required />
+                  <TextField label="Ville" type="text" variant="filled" required />
+                  <Box sx={{ mb: 2 }}>
+                    <div>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        sx={{ mt: 1, mr: 1 }}
+                      >
+                        {index === steps.length - 1 ? 'Finish' : 'Continue'}
+                      </Button>
+                    </div>
+                  </Box>
                 </form>
               }
               {
                 index === 1 &&
-                <form>
-                  <TextField label="Numéro de carte" variant="filled" required />
-                  <TextField label="Nom du titulaire" variant="filled" required />
+                <form onSubmit={handleNext}>
+                  <TextField label="Numéro de carte" type="password" variant="filled" required />
+                  <TextField label="Nom du titulaire" type="text" variant="filled" required />
                   <div className="Payment__inline-div">
-                    <TextField className="Payment__inline-child" label="Date d'expiration" variant="filled" required />
-                    <TextField className="Payment__inline-child" label="Code sécurité" variant="filled" required />
+                    <TextField InputLabelProps={{ shrink: true }} className="Payment__inline-child" defaultValue="f" type="date" label="Date d'expiration" variant="filled" required />
+                    <TextField className="Payment__inline-child" type="password" label="Code sécurité" variant="filled" required />
                   </div>
+                  <Box sx={{ mb: 2 }}>
+                    <div>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        sx={{ mt: 1, mr: 1 }}
+                      >
+                        {index === steps.length - 1 ? 'Finish' : 'Continue'}
+                      </Button>
+                      <Button
+                        onClick={handleBack}
+                        sx={{ mt: 1, mr: 1 }}
+                      >
+                        Back
+                      </Button>
+                    </div>
+                  </Box>
                 </form>
               }
 
 
-              <Box sx={{ mb: 2 }}>
-                <div>
-                  <Button
-                    variant="contained"
-                    onClick={handleNext}
-                    sx={{ mt: 1, mr: 1 }}
-                  >
-                    {index === steps.length - 1 ? 'Finish' : 'Continue'}
-                  </Button>
-                  <Button
-                    disabled={index === 0}
-                    onClick={handleBack}
-                    sx={{ mt: 1, mr: 1 }}
-                  >
-                    Back
-                  </Button>
-                </div>
-              </Box>
             </StepContent>
 
           </Step>
@@ -110,8 +121,8 @@ export default function Payment({ cart }: { cart: { item: DetailItem, quantity: 
 
       {activeStep === steps.length && (
         <Paper square elevation={0} sx={{ p: 3 }}>
-          <Typography>Commande validée !</Typography>
-          <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
+          <Typography>{validation.message}</Typography>
+          <Button component={Link} to="/" sx={{ mt: 1, mr: 1 }}>
             Retour à la page d'acceuil
           </Button>
         </Paper>
