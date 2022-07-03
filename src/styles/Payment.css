@@ -6,3 +6,19 @@
   display: flex;
   flex-direction: column;
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.Payment__inline-div {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.Payment__inline-div .Payment__inline-child {
+  flex-grow: 1;
+}

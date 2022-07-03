@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import DetailItem from '../interfaces/DetailItem';
 import '../styles/Payment.css';
 
-import {FormControl, TextField} from "@mui/material";
+import { FormControl, TextField } from "@mui/material";
 
 const steps = [
   {
@@ -53,32 +53,32 @@ export default function Payment({ cart }: { cart: { item: DetailItem, quantity: 
       <Stepper activeStep={activeStep} orientation="vertical">
         {steps.map((step, index) => (
           <Step key={step.label}>
-
-            <StepLabel
-            // optional={
-            //   index === 1 ? (
-            //     <Typography variant="caption">Last step</Typography>
-            //   ) : null
-            // }
-            >
+            <StepLabel>
               {step.label}
             </StepLabel>
             <StepContent>
               {
                 index === 0 &&
-
-                // <Typography>{step.description}</Typography>
-
-<FormControl>
-
-</FormControl>
-
-
+                <form>
+                  <div className="Payment__inline-div">
+                    <TextField className="Payment__inline-child" label="Prénom" variant="filled" required />
+                    <TextField className="Payment__inline-child" label="Nom" variant="filled" required />
+                  </div>
+                  <TextField label="Adresse" variant="filled" required />
+                  <TextField label="Code postal" variant="filled" required />
+                  <TextField label="Ville" variant="filled" required />
+                </form>
               }
               {
                 index === 1 &&
-
-                <Typography>{step.description}</Typography>
+                <form>
+                  <TextField label="Numéro de carte" variant="filled" required />
+                  <TextField label="Nom du titulaire" variant="filled" required />
+                  <div className="Payment__inline-div">
+                    <TextField className="Payment__inline-child" label="Date d'expiration" variant="filled" required />
+                    <TextField className="Payment__inline-child" label="Code sécurité" variant="filled" required />
+                  </div>
+                </form>
               }
 
 
