@@ -5,7 +5,7 @@ import FullScreenLoadingIndicator from './FullScreenLoadingIndicator';
 import Carousel from 'react-material-ui-carousel';
 import DetailItem, { caracteristic } from '../interfaces/DetailItem';
 import TabPanel from './TabPanel';
-import CardItem from '../interfaces/CardItem';
+import formatPrice from '../utils/formatPrice';
 import '../styles/Item.css';
 
 import Tabs from '@mui/material/Tabs';
@@ -85,6 +85,10 @@ export default function Item({ setCart }: { setCart: React.Dispatch<React.SetSta
             })}
           </TabPanel>
         </Box>
+
+        <div className="Item__display-price">
+            <p>Prix unitaire: {formatPrice(item!.price)}</p>
+        </div>
 
         <div className="Item__add-basket">
           <TextField value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))} type="number" id="standard-basic" label="Quantité" variant="standard" />

@@ -2,7 +2,6 @@
   margin: 0 auto;
   max-width: 500px;
   padding-bottom: 30px;
-  /* background-color: bisque; */
 }
 
 .Item__carousel img {
@@ -10,8 +9,11 @@
   width: 100%;
   border-radius: 5px;
 }
+.Item__display-price{
+font-weight: bold;
+}
 
-.Item__add-basket {
+.Item__add-basket, .Item__display-price {
   border-top: var(--border-light);
   padding-top: 20px;
   display: flex;

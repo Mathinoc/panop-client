@@ -13,14 +13,14 @@ export default function Header({cartLength}:{cartLength: number}) {
       <nav>
         <Link to="/cart" >
           <IconButton onClick={() => console.log("clicked")} aria-label="cart">
-            <Badge badgeContent={cartLength} color="secondary">
+            <Badge badgeContent={cartLength} color="primary">
               <AddShoppingCartIcon />
             </Badge>
           </IconButton>
         </Link>
         <Link to="/favorites" >
           <IconButton onClick={() => console.log("clicked")} aria-label="cart">
-            <Badge badgeContent={0} color="secondary">
+            <Badge badgeContent={0} color="primary">
               <FavoriteBorderIcon />
             </Badge>
           </IconButton>

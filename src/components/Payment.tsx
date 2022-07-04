@@ -35,6 +35,8 @@ export default function Payment({ cart }: { cart: { item: DetailItem, quantity: 
 
       // set validation status and set message ("success" or "failure" because of item "x")
 
+      
+      //Empty Cart if successful payment
 
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);

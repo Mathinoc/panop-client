@@ -37,10 +37,6 @@ export default function CartComponent({ cart, setCart }: { cart: { item: DetailI
     })
   }
 
-  function order() {
-
-  }
-
   function totalPrice() {
     return formatPrice(cart.map(el => (el.item.price * el.quantity)).reduce((acc, cur) => acc + cur))
   }
